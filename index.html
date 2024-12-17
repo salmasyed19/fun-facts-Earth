@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Fun Facts Generator</title>
+    <style>
+        /* CSS styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        #fact-text {
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            min-height: 80px;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Fun Facts Generator</h1>
+        <div id="fact-text">Click the button to get a random fun fact!</div>
+        <button onclick="generateFact()">Generate Fun Fact</button>
+    </div>
+
+    <script>
+        // JavaScript code
+        const facts = [
+            "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly good to eat.",
+            "A day on Venus is longer than its year. It takes Venus 243 Earth days to rotate on its axis but only 225 Earth days to orbit the Sun.",
+            "The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after just 38 minutes.",
+            "The first oranges weren't orange! The original oranges from Southeast Asia were actually green.",
+            "A cloud can weigh more than a million pounds. The average cumulus cloud weighs 1.1 million pounds.",
+            "Bananas are berries, but strawberries aren't.",
+            "The average person spends 6 months of their lifetime waiting for red lights to turn green.",
+            "Cows have best friends and get stressed when separated from them.",
+            "The inventor of the Frisbee was turned into a Frisbee after death. Walter Morrison was cremated and his ashes were molded into a Frisbee.",
+            "Sloths can hold their breath for up to 40 minutes underwater.",
+            "The Hawaiian alphabet has only 12 letters.",
+            "A jiffy is an actual unit of time: 1/100th of a second.",
+            "The average person walks the equivalent of three times around the world in a lifetime.",
+            "The first person convicted of speeding was going eight mph.",
+            "Nintendo was founded in 1889 as a playing card company."
+        ];
+
+        function generateFact() {
+            const factText = document.getElementById('fact-text');
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            factText.textContent = facts[randomIndex];
+
+            // Add animation effect
+            factText.style.opacity = '0';
+            setTimeout(() => {
+                factText.style.opacity = '1';
+            }, 100);
+        }
+
+        // Generate a fact when page loads
+        window.onload = generateFact;
+    </script>
+</body>
+</html>
