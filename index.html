@@ -3,96 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Fun Facts Generator</title>
+    <title>Enhanced Fun Facts Generator</title>
     <style>
-        /* CSS styles */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
-            background-color: white;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 600px;
+            max-width: 800px;
             width: 90%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         h1 {
             color: #333;
             margin-bottom: 1.5rem;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .fact-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        #fact-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            transition: transform 0.5s;
         }
 
         #fact-text {
             font-size: 1.2rem;
             margin: 1.5rem 0;
-            min-height: 80px;
             line-height: 1.6;
             color: #444;
+            transition: all 0.5s;
+            padding: 1rem;
         }
 
         button {
-            background-color: #4CAF50;
+            background: linear-gradient(45deg, #FF512F, #DD2476);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            transform-style: preserve-3d;
+            position: relative;
+            overflow: hidden;
         }
 
         button:hover {
-            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .fact-enter {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) rotateY(-30deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Random Fun Facts Generator</h1>
-        <div id="fact-text">Click the button to get a random fun fact!</div>
-        <button onclick="generateFact()">Generate Fun Fact</button>
+        <h1>✨ Amazing Fun Facts ✨</h1>
+        <div class="fact-container">
+            <img id="fact-image" src="" alt="Fact illustration">
+            <div id="fact-text">Click the button to get a random fun fact!</div>
+        </div>
+        <button onclick="generateFact()">🎲 Generate Fun Fact</button>
     </div>
 
     <script>
-        // JavaScript code
-        const facts = [
-            "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly good to eat.",
-            "A day on Venus is longer than its year. It takes Venus 243 Earth days to rotate on its axis but only 225 Earth days to orbit the Sun.",
-            "The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after just 38 minutes.",
-            "The first oranges weren't orange! The original oranges from Southeast Asia were actually green.",
-            "A cloud can weigh more than a million pounds. The average cumulus cloud weighs 1.1 million pounds.",
-            "Bananas are berries, but strawberries aren't.",
-            "The average person spends 6 months of their lifetime waiting for red lights to turn green.",
-            "Cows have best friends and get stressed when separated from them.",
-            "The inventor of the Frisbee was turned into a Frisbee after death. Walter Morrison was cremated and his ashes were molded into a Frisbee.",
-            "Sloths can hold their breath for up to 40 minutes underwater.",
-            "The Hawaiian alphabet has only 12 letters.",
-            "A jiffy is an actual unit of time: 1/100th of a second.",
-            "The average person walks the equivalent of three times around the world in a lifetime.",
-            "The first person convicted of speeding was going eight mph.",
-            "Nintendo was founded in 1889 as a playing card company."
+        const factsWithImages = [
+            {
+                text: "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly good to eat.",
+                image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500"
+            },
+            {
+                text: "A day on Venus is longer than its year. It takes Venus 243 Earth days to rotate on its axis but only 225 Earth days to orbit the Sun.",
+                image: "https://images.unsplash.com/photo-1614642264762-d0a3b8bf3700?w=500"
+            },
+            // Add more facts with relevant image URLs
         ];
 
         function generateFact() {
+            const factContainer = document.querySelector('.fact-container');
             const factText = document.getElementById('fact-text');
-            const randomIndex = Math.floor(Math.random() * facts.length);
-            factText.textContent = facts[randomIndex];
-
-            // Add animation effect
-            factText.style.opacity = '0';
+            const factImage = document.getElementById('fact-image');
+            
+            // Remove existing animation classes
+            factContainer.classList.remove('fact-enter');
+            
+            // Trigger reflow
+            void factContainer.offsetWidth;
+            
+            // Add animation class
+            factContainer.classList.add('fact-enter');
+            
+            const randomIndex = Math.floor(Math.random() * factsWithImages.length);
+            const fact = factsWithImages[randomIndex];
+            
+            factImage.style.opacity = 0;
+            factText.style.opacity = 0;
+            
             setTimeout(() => {
-                factText.style.opacity = '1';
-            }, 100);
+                factImage.src = fact.image;
+                factText.textContent = fact.text;
+                
+                factImage.style.opacity = 1;
+                factText.style.opacity = 1;
+            }, 300);
         }
 
         // Generate a fact when page loads
